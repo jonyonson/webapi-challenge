@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Project from './components/Project';
 import './App.css';
 
 class App extends React.Component {
@@ -12,6 +13,7 @@ class App extends React.Component {
       .get('http://localhost:5000/api/projects')
       .then(res => {
         const projects = res.data;
+        // console.log(projects);
         this.setState({ projects });
       })
       .catch(err => {
@@ -20,9 +22,14 @@ class App extends React.Component {
   }
 
   render() {
+    const projects = this.state.projects;
     return (
       <div className="App">
-        <div>Hello World</div>
+        <h1>All Projects</h1>
+        <p>Click project name for more info.</p>
+        {projects.map(project => {
+          return <Project project={project} key={project.id} />;
+        })}
       </div>
     );
   }
