@@ -3,7 +3,14 @@ const actionDb = require('../data/helpers/actionModel.js');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.send(`<h2>Let's do this ish! actions!</h2>`);
+  actionDb
+    .get()
+    .then(actions => {
+      res.status(200).json(actions);
+    })
+    .catch(err => {
+      res.status(500).json({ erorr: 'There was an error retrieving actions' });
+    });
 });
 
 module.exports = router;
